@@ -11,7 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -19,6 +21,9 @@ import android.widget.TextView;
 import com.macroyau.blue2serial.BluetoothDeviceListDialog;
 import com.macroyau.blue2serial.BluetoothSerial;
 import com.macroyau.blue2serial.BluetoothSerialListener;
+
+import sky4s.garminhud.GarminHUD;
+import sky4s.garminhud.eUnits;
 
 /**
  * This is an example Bluetooth terminal application built using the Blue2Serial library.
@@ -35,6 +40,7 @@ public class TerminalActivity extends AppCompatActivity
     private ScrollView svTerminal;
     private TextView tvTerminal;
     private EditText etSend;
+    private Button button;
 
     private MenuItem actionConnect, actionDisconnect;
 
@@ -62,9 +68,19 @@ public class TerminalActivity extends AppCompatActivity
                 return false;
             }
         });
+        button = (Button) findViewById(R.id.button);
 
         // Create a new instance of BluetoothSerial
         bluetoothSerial = new BluetoothSerial(this, this);
+    }
+
+    public void buttonOnClicked(View view) {
+        final int id = view.getId();
+        if (id == R.id.button) {
+            GarminHUD hud = new GarminHUD(bluetoothSerial);
+            hud.SetDistance(100, eUnits.Metres);
+
+        }
     }
 
     @Override
